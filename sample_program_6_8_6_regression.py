@@ -21,7 +21,7 @@ from sklearn.model_selection import cross_val_predict, GridSearchCV
 # sample_program_6_8_0_sdf.py で descriptors_with_[y_name].csv というファイルを、
 # 他のファイルと同様の形式で準備すれば、同じように計算することができます。
 
-y_name = 'boiling_point'
+y_name = 'logS'
 # 'boiling_point' : 沸点のデータセットの場合
 # 'logS' : 水溶解度のデータセットの場合
 # 'melting_point' : 融点のデータセットの場合
@@ -323,9 +323,9 @@ elif ad_method_name == 'ensemble':
             submodels[submodel_number].predict(selected_autoscaled_x_prediction))  # テストデータの y の値を推定し、Pandas の DataFrame 型に変換
         estimated_y_for_prediction_sub = estimated_y_for_prediction_sub * y.std() + y.mean()  # スケールをもとに戻します
         estimated_y_for_prediction_all = pd.concat([estimated_y_for_prediction_all, estimated_y_for_prediction_sub], axis=1)
-#    estimated_y_for_prediction = pd.DataFrame(estimated_y_for_prediction_all.median(axis=1))  # Series 型のため、行名と列名の設定は別に
-#    estimated_y_for_prediction.index = x_prediction.index
-#    estimated_y_for_prediction.columns = [dataset.columns[0]]
+    estimated_y_for_prediction = pd.DataFrame(estimated_y_for_prediction_all.median(axis=1))  # Series 型のため、行名と列名の設定は別に
+    estimated_y_for_prediction.index = x_prediction.index
+    estimated_y_for_prediction.columns = [dataset.columns[0]]
     std_of_estimated_y_for_prediction = pd.DataFrame(estimated_y_for_prediction_all.std(axis=1))  # Series 型のため、行名と列名の設定は別に
     std_of_estimated_y_for_prediction.index = x_prediction.index
     std_of_estimated_y_for_prediction.columns = ['std_of_estimated_y']

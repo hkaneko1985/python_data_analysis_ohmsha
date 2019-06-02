@@ -343,8 +343,8 @@ elif ad_method_name == 'ensemble':
     estimated_y_test_probability = estimated_y_test_count / number_of_submodels
     estimated_y_test_probability.to_csv(
         'estimated_y_test_probability.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
-#    # 多数決で推定された結果
-#    estimated_y_for_prediction = pd.DataFrame(estimated_y_test_count.idxmax(axis=1), columns=[dataset.columns[0]])
+    # 多数決で推定された結果
+    estimated_y_for_prediction = pd.DataFrame(estimated_y_test_count.idxmax(axis=1), columns=[dataset.columns[0]])
 elif ad_method_name == 'no':
     print('AD はありません')
     
