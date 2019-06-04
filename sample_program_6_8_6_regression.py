@@ -176,7 +176,7 @@ elif structures_name == 'brics':  # BRICS による化学構造生成
     print('フラグメントへの分解')
     fragments = set()
     for molecule in molecules:
-        fragment = BRICS.BRICSDecompose(molecule, minFragmentSize=2)
+        fragment = BRICS.BRICSDecompose(molecule, minFragmentSize=1)
         fragments.update(fragment)
     print('生成されたフラグメントの数 :', len(fragments))
     generated_structures = BRICS.BRICSBuild([Chem.MolFromSmiles(fragment) for fragment in fragments])

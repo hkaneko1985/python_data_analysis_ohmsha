@@ -84,11 +84,11 @@ x_test = dataset_test_with_dynamics.iloc[:, 1:]
 
 # サンプルの調整
 if method_name[0:2] == 'mw':
-    y_train = y_train.iloc[0:number_of_samples_in_modeling]
-    x_train = x_train.iloc[0:number_of_samples_in_modeling, :]
+    y_train = y_train.iloc[-number_of_samples_in_modeling:]
+    x_train = x_train.iloc[-number_of_samples_in_modeling:, :]
 else:
-    y_train = y_train.iloc[0:max_sample_size]
-    x_train = x_train.iloc[0:max_sample_size, :]
+    y_train = y_train.iloc[-max_sample_size:]
+    x_train = x_train.iloc[-max_sample_size:, :]
     if method_name[0:3] == 'jit':
         nn_model = NearestNeighbors(metric='euclidean')  # サンプル選択用の k-NN モデルの宣言
 
@@ -252,11 +252,11 @@ else:
                 y_train = pd.concat([y_train, y_test_all.iloc[test_sample_number - y_measurement_delay:test_sample_number - y_measurement_delay + 1]])
                 # サンプルの調整
                 if method_name[0:2] == 'mw':
-                    y_train = y_train.iloc[0:number_of_samples_in_modeling]
-                    x_train = x_train.iloc[0:number_of_samples_in_modeling, :]
+                    y_train = y_train.iloc[-number_of_samples_in_modeling:]
+                    x_train = x_train.iloc[-number_of_samples_in_modeling:, :]
                 else:
-                    y_train = y_train.iloc[0:max_sample_size]
-                    x_train = x_train.iloc[0:max_sample_size, :]
+                    y_train = y_train.iloc[-max_sample_size:]
+                    x_train = x_train.iloc[-max_sample_size:, :]
                 # オートスケーリング    
                 autoscaled_x_train = (x_train - x_train.mean()) / x_train.std()
                 autoscaled_y_train = (y_train - y_train.mean()) / y_train.std()

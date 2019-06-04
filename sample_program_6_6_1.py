@@ -25,7 +25,7 @@ print('読み込んだ分子の数 :', len(molecules))
 print('フラグメントへの分解')
 fragments = set()
 for molecule in molecules:
-    fragment = BRICS.BRICSDecompose(molecule, minFragmentSize=2)
+    fragment = BRICS.BRICSDecompose(molecule, minFragmentSize=1)
     fragments.update(fragment)
 print('生成されたフラグメントの数 :', len(fragments))
 
