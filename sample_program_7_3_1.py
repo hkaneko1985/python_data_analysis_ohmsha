@@ -18,27 +18,27 @@ from sklearn.cross_decomposition import PLSRegression
 from sklearn.model_selection import cross_val_predict, GridSearchCV
 from sklearn.neighbors import NearestNeighbors
 
-file_name_of_dataset = 'sru_y_20.csv'  # 読み込むデータセットのファイル名
+file_name_of_dataset = 'debutanizer_y_10.csv'  # 読み込むデータセットのファイル名
 # 'debutanizer_y_10.csv' : 脱ブタン塔 (debutanizer, デブタナイザー) のデータセット
 # 'sru_y_20.csv' : 煙脱硝装置 (Sulfer Recovery Unit, SRU) のデータセット
 # 'tep_13_y_15.csv' : Tennessee Eastman Process (TEP) のデータセット
 
-y_measurement_delay = 10  # y の測定時間の遅れ
-number_of_test_samples = 3000  # テストデータのサンプル数
+y_measurement_delay = 5  # y の測定時間の遅れ
+number_of_test_samples = 1000  # テストデータのサンプル数
 
 method_name = 'pls'  # ソフトセンサーの種類は以下の通りです
-# 'pls' : 最初のトレーニングデータで構築した PLS モデル (適応的ソフトセンサーではありません)
-# 'svr' : 最初のトレーニングデータで構築した SVR モデル (適応的ソフトセンサーではありません)
+# 'pls' : 最初のトレーニングデータで構築した PLS モデル (適応型ソフトセンサーではありません)
+# 'svr' : 最初のトレーニングデータで構築した SVR モデル (適応型ソフトセンサーではありません)
 # 'mwpls' : Moving Window PLS
 # 'mwsvr' : Moving Window SVR
 # 'jitpls' : Just-In-Time PLS
 # 'jitsvr' : Just-In-Time SVR
 # 'lwpls' : Locally-Weighted PLS
 
-number_of_samples_in_modeling = 150  # MW や JIT モデルにおけるモデル構築用サンプルの数 
+number_of_samples_in_modeling = 100  # MW や JIT モデルにおけるモデル構築用サンプルの数 
 max_sample_size = 10000  # データベースにおける最大のサンプル数
-dynamics_max = 20  # いくつまで時間遅れ変数を追加するか。0 なら時間遅れ変数は追加されません
-dynamics_span = 2  # いくつずつ時間を遅らせた変数を追加するか
+dynamics_max = 30  # いくつまで時間遅れ変数を追加するか。0 なら時間遅れ変数は追加されません
+dynamics_span = 3  # いくつずつ時間を遅らせた変数を追加するか
 add_nonlinear_terms_flag = False  # True (二乗項・交差項を追加) or False (追加しない)
 
 fold_number = 5  # N-fold CV の N
@@ -333,7 +333,7 @@ plt.plot(range(estimated_y_test_all.shape[0]), estimated_y_test_all.iloc[:, 0], 
 plt.plot(measured_index_test, y_measured_ys_test.iloc[:, 0], 'r.', markersize=15, label='actual y')
 plt.xlabel('time')
 plt.ylabel(dataset.columns[0])
-plt.xlim([600, 800])
+plt.xlim([550, 750])
 #plt.ylim([0, 1])
 #plt.ylim([0, 0.4])
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=18)
