@@ -5,12 +5,12 @@
 
 import math
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import sample_functions
 from sklearn import tree, metrics
-from sklearn.model_selection import cross_val_predict
 from sklearn.ensemble import RandomForestClassifier  # RF モデルの構築に使用
+from sklearn.model_selection import cross_val_predict
 
 method_name = 'dt'  # 'dt' or 'rf'
 
@@ -72,7 +72,7 @@ elif method_name == 'rf':
                                    max_features=int(max(math.ceil(x.shape[1] * optimal_x_variables_rate), 1)),
                                    oob_score=True)  # RF モデルの宣言
     model.fit(x, y)  # モデルの構築
-    
+
     # 説明変数の重要度
     x_importances = pd.DataFrame(model.feature_importances_, index=x.columns, columns=['importance'])
     x_importances.to_csv('rf_x_importances.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
