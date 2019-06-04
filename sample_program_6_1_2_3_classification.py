@@ -4,6 +4,7 @@
 """
 
 import math
+import sys
 
 import numpy as np
 import pandas as pd
@@ -23,6 +24,9 @@ svm_cs = 2 ** np.arange(-5, 11, dtype=float)
 svm_gammas = 2 ** np.arange(-20, 11, dtype=float)
 rf_number_of_trees = 300  # RF における決定木の数
 rf_x_variables_rates = np.arange(1, 11, dtype=float) / 10  # 1 つの決定木における説明変数の数の割合の候補
+
+if method_name != 'knn' and method_name != 'svm' and method_name != 'rf':
+    sys.exit('\'{0}\' というクラス分類手法はありません。method_name を見直してください。'.format(method_name))
 
 dataset = pd.read_csv('unique_m.csv', index_col=-1)
 dataset = dataset.sort_values('critical_temp', ascending=False).iloc[:4000, :]
@@ -67,7 +71,7 @@ if method_name == 'knn':
         model = KNeighborsClassifier(n_neighbors=k, metric='euclidean')  # k-NN モデルの宣言
         # クロスバリデーション推定値の計算し、DataFrame型に変換
         estimated_y_in_cv = pd.DataFrame(cross_val_predict(model, autoscaled_x_train, y_train,
-                                                                           cv=fold_number))
+                                                           cv=fold_number))
         accuracy_in_cv = metrics.accuracy_score(y_train, estimated_y_in_cv)  # 正解率を計算
         print(k, accuracy_in_cv)  # k の値と r2 を表示
         accuracy_in_cv_all.append(accuracy_in_cv)  # r2 を追加

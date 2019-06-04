@@ -4,6 +4,7 @@
 """
 
 import math
+import sys
 
 import numpy as np
 import pandas as pd
@@ -21,8 +22,11 @@ rf_x_variables_rates = np.arange(1, 11, dtype=float) / 10  # 1 つの決定木�
 
 fold_number = 2  # N-fold CV の N
 number_of_test_samples = 50  # テストデータのサンプル数
-x = pd.read_csv('tep_7.csv', index_col=0)
 
+if method_name != 'dt' and method_name != 'rf':
+    sys.exit('\'{0}\' という異常診断手法はありません。method_name を見直してください。'.format(method_name))
+    
+x = pd.read_csv('tep_7.csv', index_col=0)
 # OCSVM モデルで検出された異常サンプルを positive として目的変数を設定
 x = x.iloc[:177, :]
 y = np.full(x.shape[0], 'negative')

@@ -4,6 +4,7 @@
 """
 
 import math
+import sys
 
 import matplotlib.figure as figure
 import matplotlib.pyplot as plt
@@ -47,6 +48,9 @@ svr_cs = 2 ** np.arange(-5, 11, dtype=float)  # C の候補
 svr_epsilons = 2 ** np.arange(-10, 1, dtype=float)  # ε の候補
 svr_gammas = 2 ** np.arange(-20, 11, dtype=float)  # γ の候補
 lwpls_lambdas = 2 ** np.arange(-9, 6, dtype=float)
+
+if method_name != 'pls' and method_name != 'svr' and method_name != 'mwpls' and method_name != 'mwsvr' and method_name != 'jitpls' and method_name != 'jitsvr' and method_name != 'lwpls':
+    sys.exit('\'{0}\' というソフトセンサー手法はありません。method_name を見直してください。'.format(method_name))
 
 # データセットの読み込み
 dataset = pd.read_csv(file_name_of_dataset, index_col=0)

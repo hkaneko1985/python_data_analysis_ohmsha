@@ -3,6 +3,8 @@
 @author: hkaneko
 """
 
+import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -70,6 +72,13 @@ ocsvm_gammas = 2 ** np.arange(-20, 11, dtype=float)  # γ の候補
 number_of_submodels = 50  # サブモデルの数
 rate_of_selected_x_variables = 0.8  # 各サブデータセットで選択される説明変数の数の割合。0 より大きく 1 未満
 
+if structures_name != 'file' and structures_name != 'brics' and structures_name != 'r_group' and structures_name != 'descriptors':
+    sys.exit('\'{0}\' という予測用の化学構造(生成)はありません。structures_name を見直してください。'.format(structures_name))
+if method_name != 'pls' and method_name != 'svr':
+    sys.exit('\'{0}\' という回帰分析手法はありません。method_name を見直してください。'.format(method_name))
+if ad_method_name != 'ensemble' and ad_method_name != 'ocsvm' and ad_method_name != 'no':
+    sys.exit('\'{0}\' というAD設定手法はありません。ad_method_name を見直してください。'.format(ad_method_name))
+    
 dataset = pd.read_csv('descriptors_with_{0}.csv'.format(y_name), index_col=0)  # 物性・活性と記述子のデータセットの読み込み
 y = dataset.iloc[:, 0]
 original_x = dataset.iloc[:, 1:]

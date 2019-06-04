@@ -3,6 +3,8 @@
 @author: hkaneko
 """
 
+import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -27,6 +29,9 @@ svr_gammas = 2 ** np.arange(-20, 11, dtype=float)  # γ の候補
 ocsvm_nu = 0.003  # OCSVM における ν。トレーニングデータにおけるサンプル数に対する、サポートベクターの数の下限の割合
 ocsvm_gammas = 2 ** np.arange(-20, 11, dtype=float)  # γ の候補
 
+if method_name != 'pls' and method_name != 'svr':
+    sys.exit('\'{0}\' という回帰分析手法はありません。method_name を見直してください。'.format(method_name))
+    
 dataset = pd.read_csv('unique_m.csv', index_col=-1)
 dataset = dataset.sort_values('critical_temp', ascending=False).iloc[:4000, :]
 y = dataset.iloc[:, 86].copy()

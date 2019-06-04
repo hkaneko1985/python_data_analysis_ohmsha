@@ -3,6 +3,8 @@
 @author: hkaneko
 """
 
+import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -23,6 +25,9 @@ svr_cs = 2 ** np.arange(-5, 11, dtype=float)  # C の候補
 svr_epsilons = 2 ** np.arange(-10, 1, dtype=float)  # ε の候補
 svr_gammas = 2 ** np.arange(-20, 11, dtype=float)  # γ の候補
 
+if method_name != 'pls' and method_name != 'svr':
+    sys.exit('\'{0}\' という回帰分析手法はありません。method_name を見直してください。'.format(method_name))
+    
 dataset_train = pd.read_csv('tep_13_train_with_y.csv', index_col=0)
 dataset_test = pd.read_csv('tep_13_test_with_y.csv', index_col=0)
 x_prediction = pd.read_csv('tep_prediction.csv', index_col=0)  # 予測用データ

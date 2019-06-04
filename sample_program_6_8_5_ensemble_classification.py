@@ -4,6 +4,7 @@
 """
 
 import math
+import sys
 
 import numpy as np
 import pandas as pd
@@ -37,6 +38,9 @@ svm_gammas = 2 ** np.arange(-20, 11, dtype=float)
 rf_number_of_trees = 300  # RF における決定木の数
 rf_x_variables_rates = np.arange(1, 11, dtype=float) / 10  # 1 つの決定木における説明変数の数の割合の候補
 
+if method_name != 'knn' and method_name != 'svm' and method_name != 'rf':
+    sys.exit('\'{0}\' というクラス分類手法はありません。method_name を見直してください。'.format(method_name))
+    
 dataset = pd.read_csv('descriptors_with_{0}.csv'.format(y_name), index_col=0)  # 物性・活性と記述子のデータセットの読み込み
 y = dataset.iloc[:, 0].copy()
 x = dataset.iloc[:, 1:]

@@ -3,6 +3,8 @@
 @author: hkaneko
 """
 
+import sys
+
 import numpy as np
 import pandas as pd
 import sample_functions
@@ -21,6 +23,9 @@ svr_cs = 2 ** np.arange(-5, 11, dtype=float)  # C の候補
 svr_epsilons = 2 ** np.arange(-10, 1, dtype=float)  # ε の候補
 svr_gammas = 2 ** np.arange(-20, 11, dtype=float)  # γ の候補
 
+if method_name != 'pls' and method_name != 'svr':
+    sys.exit('\'{0}\' という回帰分析手法はありません。method_name を見直してください。'.format(method_name))
+    
 dataset = pd.read_csv('unique_m.csv', index_col=-1)
 dataset = dataset.sort_values('critical_temp', ascending=False).iloc[:4000, :]
 y = dataset.iloc[:, 86].copy()

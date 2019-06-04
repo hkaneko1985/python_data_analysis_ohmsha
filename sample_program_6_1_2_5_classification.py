@@ -4,6 +4,7 @@
 """
 
 import math
+import sys
 
 import numpy as np
 import pandas as pd
@@ -28,6 +29,9 @@ rf_x_variables_rates = np.arange(1, 11, dtype=float) / 10  # 1 つの決定木�
 ocsvm_nu = 0.003  # OCSVM における ν。トレーニングデータにおけるサンプル数に対する、サポートベクターの数の下限の割合
 ocsvm_gammas = 2 ** np.arange(-20, 11, dtype=float)  # γ の候補
 
+if method_name != 'knn' and method_name != 'svm' and method_name != 'rf':
+    sys.exit('\'{0}\' というクラス分類手法はありません。method_name を見直してください。'.format(method_name))
+    
 dataset = pd.read_csv('unique_m.csv', index_col=-1)
 dataset = dataset.sort_values('critical_temp', ascending=False).iloc[:4000, :]
 y = dataset.iloc[:, 86].copy()

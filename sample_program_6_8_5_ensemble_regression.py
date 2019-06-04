@@ -3,6 +3,8 @@
 @author: hkaneko
 """
 
+import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -37,6 +39,9 @@ svr_cs = 2 ** np.arange(-5, 11, dtype=float)  # C の候補
 svr_epsilons = 2 ** np.arange(-10, 1, dtype=float)  # ε の候補
 svr_gammas = 2 ** np.arange(-20, 11, dtype=float)  # γ の候補
 
+if method_name != 'pls' and method_name != 'svr':
+    sys.exit('\'{0}\' という回帰分析手法はありません。method_name を見直してください。'.format(method_name))
+    
 dataset = pd.read_csv('descriptors_with_{0}.csv'.format(y_name), index_col=0)  # 物性・活性と記述子のデータセットの読み込み
 y = dataset.iloc[:, 0].copy()
 x = dataset.iloc[:, 1:]
