@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import sample_functions
-from scipy.spatial.distance import cdist
 from sklearn import metrics
 from sklearn import svm
 from sklearn.cross_decomposition import PLSRegression
