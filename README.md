@@ -1,1 +1,1 @@
-# python_data_analysis_ohmsha
+# 化学・化学工学のためのデータ解析～Pythonによる実践機械学習～ (仮)
