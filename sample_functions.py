@@ -237,8 +237,9 @@ def add_nonlinear_terms(x):
                     [x, x_square.rename(columns={x_square.columns[i]: '{0}^2'.format(x_square.columns[i])}).iloc[:, i]],
                     axis=1)
             elif i < j:  # 交差項
-                x = pd.concat([x, original_x.iloc[:, i] * original_x.iloc[:, j]], axis=1)
-                x = x.rename(columns={0: '{0}*{1}'.format(x_square.columns[i], x_square.columns[j])})
+                x_cross = original_x.iloc[:, i] * original_x.iloc[:, j]
+                x_cross.name = '{0}*{1}'.format(original_x.columns[i], original_x.columns[j])
+                x = pd.concat([x, x_cross], axis=1)
     return x
 
 def add_time_delayed_variable(x, dynamics_max, dynamics_span):
