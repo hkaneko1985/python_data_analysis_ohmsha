@@ -27,7 +27,7 @@ x = dataset.iloc[:, 1:]  # 説明変数
 # ランダムにトレーニングデータとテストデータとに分割
 # random_state に数字を与えることで、別のときに同じ数字を使えば、ランダムとはいえ同じ結果にすることができます
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=number_of_test_samples, shuffle=True,
-                                                    random_state=21)
+                                                    random_state=21, stratify=y)
 
 class_types = list(set(y_train))  # クラスの種類
 class_types.sort(reverse=True)  # 並び替え

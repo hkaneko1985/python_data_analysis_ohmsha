@@ -43,7 +43,7 @@ x = (x.T / x.T.sum()).T
 # ランダムにトレーニングデータとテストデータとに分割
 # random_state に数字を与えることで、別のときに同じ数字を使えば、ランダムとはいえ同じ結果にすることができます
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=number_of_test_samples, shuffle=True,
-                                                    random_state=21)
+                                                    random_state=21, stratify=y)
 # 標準偏差が 0 の説明変数を削除
 std_0_variable_flags = x_train.std() == 0
 x_train = x_train.drop(x_train.columns[std_0_variable_flags], axis=1)
