@@ -96,6 +96,11 @@ else:
     if method_name[0:3] == 'jit':
         nn_model = NearestNeighbors(metric='euclidean')  # サンプル選択用の k-NN モデルの宣言
 
+# 標準偏差が 0 の説明変数を削除
+std_0_variable_flags = x_train.std() == 0
+x_train = x_train.drop(x_train.columns[std_0_variable_flags], axis=1)
+x_test = x_test.drop(x_test.columns[std_0_variable_flags], axis=1)
+
 # オートスケーリング    
 autoscaled_x_train = (x_train - x_train.mean()) / x_train.std()
 autoscaled_y_train = (y_train - y_train.mean()) / y_train.std()
@@ -190,14 +195,16 @@ elif method_name == 'lwpls':
     optimal_lambda_in_similarity = lwpls_lambdas[best_candidate_number[1][0]]
 
 # y の推定やモデリング
+x_train_std0_deleted = x_train.copy()
+x_test_std0_deleted = x_test.copy()
 if method_name == 'pls' or method_name == 'svr':
     estimated_y_test_all = model.predict(autoscaled_x_test) * y_train.std() + y_train.mean()
 else:
     estimated_y_test_all = np.zeros((len(y_test_all)))
     for test_sample_number in range(len(y_test_all)):
         print(test_sample_number + 1, '/', len(y_test_all))
-        autoscaled_x_test = (x_test.iloc[
-                             test_sample_number:test_sample_number + 1, ] - x_train.mean()) / x_train.std()  # オートスケーリング
+        autoscaled_x_test = (x_test_std0_deleted.iloc[
+                             test_sample_number:test_sample_number + 1, ] - x_train_std0_deleted.mean()) / x_train_std0_deleted.std()  # オートスケーリング
         # y の推定
         if method_name[0:2] == 'mw':
             autoscaled_estimated_y_test_tmp = model.predict(autoscaled_x_test)
@@ -213,10 +220,16 @@ else:
                                                      n_neighbors=min(number_of_samples_in_modeling, x_train.shape[0]))
             x_train_jit = x_train.iloc[nn_index_test[0, :], :]
             y_train_jit = y_train.iloc[nn_index_test[0, :]]
+            
+            # 標準偏差が 0 の説明変数を削除
+            std_0_variable_flags = x_train_jit.std() == 0
+            x_train_jit = x_train_jit.drop(x_train_jit.columns[std_0_variable_flags], axis=1)
+            x_test_jit = x_test.drop(x_test.columns[std_0_variable_flags], axis=1)
+            
             # オートスケーリング    
             autoscaled_x_train_jit = (x_train_jit - x_train_jit.mean()) / x_train_jit.std()
             autoscaled_y_train_jit = (y_train_jit - y_train_jit.mean()) / y_train_jit.std()
-            autoscaled_x_test_jit = (x_test.iloc[
+            autoscaled_x_test_jit = (x_test_jit.iloc[
                                      test_sample_number:test_sample_number + 1, ] - x_train_jit.mean()) / x_train_jit.std()
             # ハイパーパラメータの最適化
             if method_name == 'jitpls':
@@ -261,8 +274,14 @@ else:
                 else:
                     y_train = y_train.iloc[-max_sample_size:]
                     x_train = x_train.iloc[-max_sample_size:, :]
+                    
+                # 標準偏差が 0 の説明変数を削除
+                std_0_variable_flags = x_train.std() == 0
+                x_train_std0_deleted = x_train.drop(x_train.columns[std_0_variable_flags], axis=1)
+                x_test_std0_deleted = x_test.drop(x_test.columns[std_0_variable_flags], axis=1)
+                
                 # オートスケーリング    
-                autoscaled_x_train = (x_train - x_train.mean()) / x_train.std()
+                autoscaled_x_train = (x_train_std0_deleted - x_train_std0_deleted.mean()) / x_train_std0_deleted.std()
                 autoscaled_y_train = (y_train - y_train.mean()) / y_train.std()
                 # ハイパーパラメータの最適化
                 if method_name == 'mwpls':
