@@ -133,7 +133,7 @@ predicted_ys.columns = ys.columns
 predicted_ys.to_csv('predicted_ys.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
 # 予測用データに対して、AD の中か外かを判定
-knn_distance_prediction, knn_index_prediction = ad_model.kneighbors(autoscaled_x_prediction, n_neighbors=k_in_knn + 1)
+knn_distance_prediction, knn_index_prediction = ad_model.kneighbors(autoscaled_x_prediction, n_neighbors=k_in_knn)
 knn_distance_prediction = pd.DataFrame(knn_distance_prediction, index=x_prediction.index)
 knn_distance_prediction.index = x_prediction.index  # サンプル名をトレーニングデータのサンプル名に
 mean_of_knn_distance_prediction = pd.DataFrame(knn_distance_prediction.mean(axis=1))  # k_in_knn 個の距離の平均
