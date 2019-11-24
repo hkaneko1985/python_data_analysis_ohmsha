@@ -40,7 +40,9 @@ correlation_coefficients = y_measured_dataset.corr()  # 相関行列の計算
 correlation_coefficients.to_csv('correlation_coefficients.csv')  # 相関行列を csv ファイルとして保存
 # 相関行列のヒートマップ (相関係数の値なし) 
 plt.rcParams['font.size'] = 12
-sns.heatmap(correlation_coefficients, vmax=1, vmin=-1, cmap='seismic', square=True, annot=False)
+sns.heatmap(correlation_coefficients, vmax=1, vmin=-1, cmap='seismic', square=True, annot=False, xticklabels=1, yticklabels=1)
+plt.xlim([0, correlation_coefficients.shape[0]])
+plt.ylim([0, correlation_coefficients.shape[0]])
 plt.show()
 
 # y との相関係数のヒストグラム
