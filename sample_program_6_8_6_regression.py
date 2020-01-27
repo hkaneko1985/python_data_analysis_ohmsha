@@ -137,17 +137,17 @@ elif method_name == 'svr':
         optimal_svr_gamma = sample_functions.gamma_optimization_with_variance(autoscaled_x, svr_gammas)
     # CV による ε の最適化
     model_in_cv = GridSearchCV(svm.SVR(kernel='rbf', C=3, gamma=optimal_svr_gamma), {'epsilon': svr_epsilons},
-                               cv=fold_number, iid=False, verbose=2)
+                               cv=fold_number, verbose=2)
     model_in_cv.fit(autoscaled_x, autoscaled_y)
     optimal_svr_epsilon = model_in_cv.best_params_['epsilon']
     # CV による C の最適化
     model_in_cv = GridSearchCV(svm.SVR(kernel='rbf', epsilon=optimal_svr_epsilon, gamma=optimal_svr_gamma),
-                               {'C': svr_cs}, cv=fold_number, iid=False, verbose=2)
+                               {'C': svr_cs}, cv=fold_number, verbose=2)
     model_in_cv.fit(autoscaled_x, autoscaled_y)
     optimal_svr_c = model_in_cv.best_params_['C']
     # CV による γ の最適化
     model_in_cv = GridSearchCV(svm.SVR(kernel='rbf', epsilon=optimal_svr_epsilon, C=optimal_svr_c),
-                               {'gamma': svr_gammas}, cv=fold_number, iid=False, verbose=2)
+                               {'gamma': svr_gammas}, cv=fold_number, verbose=2)
     model_in_cv.fit(autoscaled_x, autoscaled_y)
     optimal_svr_gamma = model_in_cv.best_params_['gamma']
     # 最適化された C, ε, γ
