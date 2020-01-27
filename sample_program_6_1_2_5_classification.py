@@ -85,12 +85,12 @@ elif method_name == 'svm':
     optimal_svm_gamma = optimal_ocsvm_gamma.copy()
     # CV による C の最適化
     model_in_cv = GridSearchCV(svm.SVC(kernel='rbf', gamma=optimal_svm_gamma),
-                               {'C': svm_cs}, cv=fold_number, iid=False, verbose=2)
+                               {'C': svm_cs}, cv=fold_number, verbose=2)
     model_in_cv.fit(autoscaled_x, y)
     optimal_svm_c = model_in_cv.best_params_['C']
     # CV による γ の最適化
     model_in_cv = GridSearchCV(svm.SVC(kernel='rbf', C=optimal_svm_c),
-                               {'gamma': svm_gammas}, cv=fold_number, iid=False, verbose=2)
+                               {'gamma': svm_gammas}, cv=fold_number, verbose=2)
     model_in_cv.fit(autoscaled_x, y)
     optimal_svm_gamma = model_in_cv.best_params_['gamma']
     print('CV で最適化された C :', optimal_svm_c)

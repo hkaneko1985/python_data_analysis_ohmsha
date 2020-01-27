@@ -32,7 +32,7 @@ autoscaled_x_train = (x_train - x_train.mean()) / x_train.std()
 autoscaled_x_test = (x_test - x_train.mean()) / x_train.std()
 
 # CV による C, γ の最適化
-model_in_cv = GridSearchCV(svm.SVC(kernel='rbf'), {'C': svm_cs, 'gamma': svm_gammas}, cv=fold_number, iid=False)
+model_in_cv = GridSearchCV(svm.SVC(kernel='rbf'), {'C': svm_cs, 'gamma': svm_gammas}, cv=fold_number)
 model_in_cv.fit(autoscaled_x_train, y_train)
 optimal_svm_c = model_in_cv.best_params_['C']
 optimal_svm_gamma = model_in_cv.best_params_['gamma']

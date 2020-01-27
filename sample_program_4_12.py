@@ -36,13 +36,13 @@ optimal_svm_gamma = sample_functions.gamma_optimization_with_variance(autoscaled
 
 # CV による C の最適化
 model_in_cv = GridSearchCV(svm.SVC(kernel='rbf', gamma=optimal_svm_gamma),
-                           {'C': svm_cs}, cv=fold_number, iid=False)
+                           {'C': svm_cs}, cv=fold_number)
 model_in_cv.fit(autoscaled_x_train, y_train)
 optimal_svm_c = model_in_cv.best_params_['C']
 
 # CV による γ の最適化
 model_in_cv = GridSearchCV(svm.SVC(kernel='rbf', C=optimal_svm_c),
-                           {'gamma': svm_gammas}, cv=fold_number, iid=False)
+                           {'gamma': svm_gammas}, cv=fold_number)
 model_in_cv.fit(autoscaled_x_train, y_train)
 optimal_svm_gamma = model_in_cv.best_params_['gamma']
 print('CV で最適化された C :', optimal_svm_c)

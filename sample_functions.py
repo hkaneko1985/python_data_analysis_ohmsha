@@ -352,7 +352,7 @@ def gamma_optimization_with_variance(x, gammas):
     variance_of_gram_matrix = list()
     for index, ocsvm_gamma in enumerate(gammas):
         print(index + 1, '/', len(gammas))
-        gram_matrix = np.exp(-ocsvm_gamma * cdist(x, x, metric='seuclidean'))
+        gram_matrix = np.exp(-ocsvm_gamma * cdist(x, x, metric='sqeuclidean'))
         variance_of_gram_matrix.append(gram_matrix.var(ddof=1))
     return gammas[variance_of_gram_matrix.index(max(variance_of_gram_matrix))]
 
