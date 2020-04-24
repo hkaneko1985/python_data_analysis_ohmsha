@@ -168,7 +168,7 @@ for iteration in range(number_of_iterations):
     # 予測して、 positive なサンプルのみ保存
     predicted_y = model.predict(autoscaled_x_prediction)
     predicted_positive_dataset = pd.concat(
-        [predicted_positive_dataset, original_x_prediction.iloc[predicted_y == 'positive', :]], axis=0)
+        [predicted_positive_dataset, original_x_prediction_inside_ad.iloc[predicted_y == 'positive', :]], axis=0)
 
 predicted_positive_dataset = predicted_positive_dataset.reset_index(drop=True)
 predicted_positive_dataset.to_csv('predicted_positive_dataset.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
