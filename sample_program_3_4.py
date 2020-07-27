@@ -35,7 +35,7 @@ clustering_results = linkage(autoscaled_x, metric='euclidean', method='ward')
 
 # デンドログラムの作成
 plt.rcParams['font.size'] = 18  # 横軸や縦軸の名前の文字などのフォントのサイズ
-dendrogram(clustering_results, labels=x.index, color_threshold=0,
+dendrogram(clustering_results, labels=list(x.index), color_threshold=0,
            orientation='right')  # デンドログラムの作成。labels=x.index でサンプル名を入れています
 plt.xlabel('distance')  # 横軸の名前
 plt.show()
