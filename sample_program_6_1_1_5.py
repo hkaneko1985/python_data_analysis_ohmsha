@@ -19,6 +19,7 @@ from sklearn.neighbors import NearestNeighbors
 method_name = 'pls'  # 'pls' or 'svr'
 add_nonlinear_terms_flag = True  # True (二乗項・交差項を追加) or False (追加しない)
 rate_of_training_samples_inside_ad = 0.68  # AD 内となるトレーニングデータの割合。AD　のしきい値を決めるときに使用
+number_of_y = 2  # 目的変数の数
 
 k_in_knn = 1  # k-NN における k
 fold_number = 10  # N-fold CV の N
@@ -31,16 +32,16 @@ if method_name != 'pls' and method_name != 'svr':
     sys.exit('\'{0}\' という回帰分析手法はありません。method_name を見直してください。'.format(method_name))
     
 dataset = pd.read_csv('virtual_resin.csv', index_col=0)
-ys = dataset.iloc[:, 0:2]  # 目的変数
+ys = dataset.iloc[:, 0:number_of_y]  # 目的変数
 if add_nonlinear_terms_flag:
-    x_tmp = sample_functions.add_nonlinear_terms(dataset.iloc[:, 2:])  # 説明変数の二乗項や交差項を追加
+    x_tmp = sample_functions.add_nonlinear_terms(dataset.iloc[:, number_of_y:])  # 説明変数の二乗項や交差項を追加
     x = x_tmp.drop(x_tmp.columns[x_tmp.std() == 0], axis=1)  # 標準偏差が 0 の説明変数を削除
 else:
-    x = dataset.iloc[:, 2:]  # 説明変数
+    x = dataset.iloc[:, number_of_y:]  # 説明変数
 autoscaled_x = (x - x.mean(axis=0)) / x.std(axis=0, ddof=1)  # オートスケーリング
 
 models = []  # ここに y ごとの回帰モデルを格納
-for y_number in range(2):
+for y_number in range(number_of_y):
     y = ys.iloc[:, y_number]
     autoscaled_y = (y - y.mean()) / y.std(ddof=1)  # オートスケーリング
     if method_name == 'pls':
@@ -125,7 +126,7 @@ else:
 autoscaled_x_prediction = (x_prediction - x.mean(axis=0)) / x.std(axis=0, ddof=1)
 # y ごとに予測
 predicted_ys = pd.DataFrame()
-for y_number in range(2):
+for y_number in range(number_of_y):
     predicted_y = pd.DataFrame(models[y_number].predict(autoscaled_x_prediction))
     predicted_ys = pd.concat([predicted_ys, predicted_y], axis=1)
 predicted_ys.index = x_prediction.index
