@@ -22,7 +22,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=number_of_te
 
 # オートスケーリング
 autoscaled_x_train = (x_train - x_train.mean()) / x_train.std()
-autoscaled_x_test = (x_test - x_test.mean()) / x_test.std()
+autoscaled_x_test = (x_test - x_train.mean()) / x_train.std()
 
 # k-NN による AD
 ad_model = NearestNeighbors(n_neighbors=k_in_knn, metric='euclidean')  # AD モデルの宣言
