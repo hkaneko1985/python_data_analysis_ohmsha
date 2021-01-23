@@ -127,7 +127,8 @@ autoscaled_x_prediction = (x_prediction - x.mean(axis=0)) / x.std(axis=0, ddof=1
 # y ごとに予測
 predicted_ys = pd.DataFrame()
 for y_number in range(number_of_y):
-    predicted_y = pd.DataFrame(models[y_number].predict(autoscaled_x_prediction))
+    autoscaled_predicted_y = models[y_number].predict(autoscaled_x_prediction)
+    predicted_y = pd.DataFrame(autoscaled_predicted_y * ys.iloc[:, y_number].std() + ys.iloc[:, y_number].mean())
     predicted_ys = pd.concat([predicted_ys, predicted_y], axis=1)
 predicted_ys.index = x_prediction.index
 predicted_ys.columns = ys.columns
