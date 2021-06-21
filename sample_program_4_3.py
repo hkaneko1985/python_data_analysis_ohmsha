@@ -71,7 +71,7 @@ results_train.to_csv('estimated_y_train.csv')  # 推定値を csv ファイル�
 
 
 # テストデータの、トレーニングデータを用いたオートスケーリング
-autoscaled_x_test = (x_test - x_test.mean()) / x_test.std()
+autoscaled_x_test = (x_test - x_train.mean()) / x_train.std()
 
 # テストデータの推定
 autoscaled_estimated_y_test = model.predict(autoscaled_x_test)  # y の推定
