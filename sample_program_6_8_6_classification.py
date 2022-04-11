@@ -294,12 +294,12 @@ elif ad_method_name == 'ensemble':
         elif method_name == 'svm':
             # CV による C の最適化
             model_in_cv = GridSearchCV(svm.SVC(kernel='rbf', gamma=optimal_svm_gamma),
-                                       {'C': svm_cs}, cv=fold_number, iid=False)
+                                       {'C': svm_cs}, cv=fold_number)
             model_in_cv.fit(selected_autoscaled_x, y)
             optimal_svm_c = model_in_cv.best_params_['C']
             # CV による γ の最適化
             model_in_cv = GridSearchCV(svm.SVC(kernel='rbf', C=optimal_svm_c),
-                                       {'gamma': svm_gammas}, cv=fold_number, iid=False)
+                                       {'gamma': svm_gammas}, cv=fold_number)
             model_in_cv.fit(selected_autoscaled_x, y)
             optimal_svm_gamma = model_in_cv.best_params_['gamma']
             submodel = svm.SVC(kernel='rbf', C=optimal_svm_c, gamma=optimal_svm_gamma)  # SVM モデルの宣言

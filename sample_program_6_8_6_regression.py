@@ -294,17 +294,17 @@ elif ad_method_name == 'ensemble':
             # ハイパーパラメータの最適化
             # CV による ε の最適化
             model_in_cv = GridSearchCV(svm.SVR(kernel='rbf', C=3, gamma=optimal_svr_gamma), {'epsilon': svr_epsilons},
-                                       cv=fold_number, iid=False)
+                                       cv=fold_number)
             model_in_cv.fit(selected_autoscaled_x, autoscaled_y)
             optimal_svr_epsilon = model_in_cv.best_params_['epsilon']
             # CV による C の最適化
             model_in_cv = GridSearchCV(svm.SVR(kernel='rbf', epsilon=optimal_svr_epsilon, gamma=optimal_svr_gamma),
-                                       {'C': svr_cs}, cv=fold_number, iid=False)
+                                       {'C': svr_cs}, cv=fold_number)
             model_in_cv.fit(selected_autoscaled_x, autoscaled_y)
             optimal_svr_c = model_in_cv.best_params_['C']
             # CV による γ の最適化
             model_in_cv = GridSearchCV(svm.SVR(kernel='rbf', epsilon=optimal_svr_epsilon, C=optimal_svr_c),
-                                       {'gamma': svr_gammas}, cv=fold_number, iid=False)
+                                       {'gamma': svr_gammas}, cv=fold_number)
             model_in_cv.fit(selected_autoscaled_x, autoscaled_y)
             optimal_svr_gamma = model_in_cv.best_params_['gamma']
             # SVR
