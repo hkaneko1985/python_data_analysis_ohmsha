@@ -102,7 +102,7 @@ def estimation_and_performance_check_in_regression_train_and_test(model, x_train
     # トレーニングデータの推定
     estimated_y_train = model.predict(x_train) * y_train.std() + y_train.mean()  # y を推定し、スケールをもとに戻します
     estimated_y_train = pd.DataFrame(estimated_y_train, index=x_train.index,
-                                     columns=['estimated_y'])  # Pandas の DataFrame 型に変換。行の名前・列の名前も設定
+                                     columns=['estimated y'])  # Pandas の DataFrame 型に変換。行の名前・列の名前も設定
     
     # トレーニングデータの実測値 vs. 推定値のプロット
     plt.rcParams['font.size'] = 18  # 横軸や縦軸の名前の文字などのフォントのサイズ
@@ -125,17 +125,17 @@ def estimation_and_performance_check_in_regression_train_and_test(model, x_train
 
     # トレーニングデータの結果の保存
     y_train_for_save = pd.DataFrame(y_train)  # Series のため列名は別途変更
-    y_train_for_save.columns = ['actual_y']
+    y_train_for_save.columns = ['actual y']
     y_error_train = y_train_for_save.iloc[:, 0] - estimated_y_train.iloc[:, 0]
     y_error_train = pd.DataFrame(y_error_train)  # Series のため列名は別途変更
-    y_error_train.columns = ['error_of_y(actual_y-estimated_y)']
+    y_error_train.columns = ['error of y(actual y - estimated y)']
     results_train = pd.concat([estimated_y_train, y_train_for_save, y_error_train], axis=1)
     results_train.to_csv('estimated_y_train.csv')  # 推定値を csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
     # テストデータの推定
     estimated_y_test = model.predict(x_test) * y_train.std() + y_train.mean()  # y を推定し、スケールをもとに戻します
     estimated_y_test = pd.DataFrame(estimated_y_test, index=x_test.index,
-                                    columns=['estimated_y'])  # Pandas の DataFrame 型に変換。行の名前・列の名前も設定
+                                    columns=['estimated y'])  # Pandas の DataFrame 型に変換。行の名前・列の名前も設定
    
     # テストデータの実測値 vs. 推定値のプロット
     plt.rcParams['font.size'] = 18  # 横軸や縦軸の名前の文字などのフォントのサイズ
@@ -158,10 +158,10 @@ def estimation_and_performance_check_in_regression_train_and_test(model, x_train
 
     # テストデータの結果の保存
     y_test_for_save = pd.DataFrame(y_test)  # Series のため列名は別途変更
-    y_test_for_save.columns = ['actual_y']
+    y_test_for_save.columns = ['actual y']
     y_error_test = y_test_for_save.iloc[:, 0] - estimated_y_test.iloc[:, 0]
     y_error_test = pd.DataFrame(y_error_test)  # Series のため列名は別途変更
-    y_error_test.columns = ['error_of_y(actual_y-estimated_y)']
+    y_error_test.columns = ['error of y (actual y - estimated y)']
     results_test = pd.concat([estimated_y_test, y_test_for_save, y_error_test], axis=1)
     results_test.to_csv('estimated_y_test.csv')  # 推定値を csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
@@ -171,7 +171,7 @@ def estimation_and_performance_check_in_classification_train_and_test(model, x_t
 
     # トレーニングデータのクラスの推定
     estimated_y_train = pd.DataFrame(model.predict(x_train), index=x_train.index, columns=[
-        'estimated_class'])  # トレーニングデータのクラスを推定し、Pandas の DataFrame 型に変換。行の名前・列の名前も設定
+        'estimated class'])  # トレーニングデータのクラスを推定し、Pandas の DataFrame 型に変換。行の名前・列の名前も設定
 
     # トレーニングデータの混同行列
     confusion_matrix_train = pd.DataFrame(
@@ -183,16 +183,16 @@ def estimation_and_performance_check_in_classification_train_and_test(model, x_t
 
     # トレーニングデータの結果の保存
     y_train_for_save = pd.DataFrame(y_train)  # Series のため列名は別途変更
-    y_train_for_save.columns = ['actual_class']
+    y_train_for_save.columns = ['actual class']
     y_error_train = y_train_for_save.iloc[:, 0] == estimated_y_train.iloc[:, 0]
     y_error_train = pd.DataFrame(y_error_train)  # Series のため列名は別途変更
-    y_error_train.columns = ['TRUE_if_estimated_class_is_correct']
+    y_error_train.columns = ['TRUE if estimated class is correct']
     results_train = pd.concat([estimated_y_train, y_train_for_save, y_error_train], axis=1)
     results_train.to_csv('estimated_y_train.csv')  # 推定値を csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
     # テストデータのクラスの推定
     estimated_y_test = pd.DataFrame(model.predict(x_test), index=x_test.index,
-                                    columns=['estimated_class'])  # テストデータのクラスを推定し、Pandas の DataFrame 型に変換。行の名前・列の名前も設定
+                                    columns=['estimated class'])  # テストデータのクラスを推定し、Pandas の DataFrame 型に変換。行の名前・列の名前も設定
 
     # テストデータの混同行列
     confusion_matrix_test = pd.DataFrame(
@@ -204,10 +204,10 @@ def estimation_and_performance_check_in_classification_train_and_test(model, x_t
 
     # テストデータの結果の保存
     y_test_for_save = pd.DataFrame(y_test)  # Series のため列名は別途変更
-    y_test_for_save.columns = ['actual_class']
+    y_test_for_save.columns = ['actual class']
     y_error_test = y_test_for_save.iloc[:, 0] == estimated_y_test.iloc[:, 0]
     y_error_test = pd.DataFrame(y_error_test)  # Series のため列名は別途変更
-    y_error_test.columns = ['TRUE_if_estimated_class_is_correct']
+    y_error_test.columns = ['TRUE if estimated class is correct']
     results_test = pd.concat([estimated_y_test, y_test_for_save, y_error_test], axis=1)
     results_test.to_csv('estimated_y_test.csv')  # 推定値を csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
