@@ -43,8 +43,8 @@ ad_threshold = sorted_mean_of_knn_distance_train.iloc[
     round(autoscaled_x_train.shape[0] * rate_of_training_samples_inside_ad) - 1]
 
 # トレーニングデータに対して、AD の中か外かを判定
-inside_ad_flag_train = pd.DataFrame(mean_of_knn_distance_train <= ad_threshold, index=x_train.index,
-                                    columns=['inside_ad_flag'])  # AD 内のサンプルのみ TRUE
+inside_ad_flag_train = mean_of_knn_distance_train <= ad_threshold  # AD 内のサンプルのみ TRUE
+inside_ad_flag_train.columns = ['inside_ad_flag']
 inside_ad_flag_train.to_csv('inside_ad_flag_train.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされるため注意
 
 # テストデータに対する k-NN 距離の計算
@@ -55,6 +55,6 @@ mean_of_knn_distance_test = pd.DataFrame(knn_distance_test.mean(axis=1),
 mean_of_knn_distance_test.to_csv('mean_of_knn_distance_test.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされるため注意
 
 # テストデータに対して、AD の中か外かを判定
-inside_ad_flag_test = pd.DataFrame(mean_of_knn_distance_test <= ad_threshold, index=x_test.index,
-                                   columns=['inside_ad_flag'])  # AD 内のサンプルのみ TRUE
+inside_ad_flag_test = mean_of_knn_distance_test <= ad_threshold  # AD 内のサンプルのみ TRUE
+inside_ad_flag_test.columns = ['inside_ad_flag']
 inside_ad_flag_test.to_csv('inside_ad_flag_test.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされるため注意
