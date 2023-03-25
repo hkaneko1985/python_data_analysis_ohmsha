@@ -5,6 +5,7 @@
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 import seaborn as sns
 
 number_of_bins = 50  # ヒストグラムのビンの数
@@ -25,7 +26,7 @@ plt.show()  # 以上の設定において、グラフを描画
 # サンプルごとに用いられている原子の種類数のヒストグラム
 numbers_of_atom_types = []
 for sample_number in range(x.shape[0]):
-    numbers_of_atom_types.append(len(x.iloc[sample_number, :].value_counts()))
+    numbers_of_atom_types.append(np.count_nonzero(x.iloc[sample_number, :]))
 plt.hist(numbers_of_atom_types, bins=number_of_bins)  # ヒストグラムの作成
 plt.xlabel('number of atoms')  # 横軸の名前
 plt.ylabel('frequency')  # 縦軸の名前
