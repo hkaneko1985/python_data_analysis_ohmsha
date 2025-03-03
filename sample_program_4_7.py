@@ -40,7 +40,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=number_of_te
 # オートスケーリング
 autoscaled_y_train = (y_train - y_train.mean()) / y_train.std()
 autoscaled_x_train = (x_train - x_train.mean()) / x_train.std()
-autoscaled_x_test = (x_test - x_test.mean()) / x_test.std()
+autoscaled_x_test = (x_test - x_train.mean()) / x_train.std()
 
 # CV による成分数の最適化
 components = []  # 空の list の変数を作成して、成分数をこの変数に追加していきます同じく成分数をこの変数に追加
