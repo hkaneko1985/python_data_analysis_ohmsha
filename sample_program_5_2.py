@@ -30,7 +30,7 @@ autoscaled_x_test = (x_test - x_test.mean()) / x_test.std()
 variance_of_gram_matrix = list()
 for ocsvm_gamma in ocsvm_gammas:
     gram_matrix = np.exp(
-        -ocsvm_gamma * cdist(autoscaled_x_train, autoscaled_x_train, metric='seuclidean'))
+        -ocsvm_gamma * cdist(autoscaled_x_train, autoscaled_x_train, metric='sqeuclidean'))
     variance_of_gram_matrix.append(gram_matrix.var(ddof=1))
 optimal_ocsvm_gamma = ocsvm_gammas[np.where(variance_of_gram_matrix == np.max(variance_of_gram_matrix))[0][0]]
 # 最適化された γ
