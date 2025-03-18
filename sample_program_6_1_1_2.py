@@ -82,9 +82,12 @@ plt.show()
 # k3n-error を用いた perplexity の最適化 
 k3n_errors = []
 for index, perplexity in enumerate(candidates_of_perplexity):
-    print(index + 1, '/', len(candidates_of_perplexity))
-    t = TSNE(perplexity=perplexity, n_components=2, init='pca', random_state=10).fit_transform(autoscaled_x)
-    scaled_t = (t - t.mean(axis=0)) / t.std(axis=0, ddof=1)
+    if perplexity >= autoscaled_x.shape[0]:
+        print(index + 1, '/', len(candidates_of_perplexity), 'perprelixity がサンプル数より大きい')
+    else:
+        print(index + 1, '/', len(candidates_of_perplexity))
+        t = TSNE(perplexity=perplexity, n_components=2, init='pca', random_state=10).fit_transform(autoscaled_x)
+        scaled_t = (t - t.mean(axis=0)) / t.std(axis=0, ddof=1)
 
     k3n_errors.append(
         sample_functions.k3n_error(autoscaled_x, scaled_t, k_in_k3n_error) + sample_functions.k3n_error(
